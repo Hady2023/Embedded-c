@@ -1,0 +1,122 @@
+
+Allocating common symbols
+Common symbol       size              file
+
+learn_in            0x4               uart.o
+Buffer_2            0x64              app.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+Mem              0x00000000         0x04000000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+                0x00010000                . = 0x10000
+
+.startup        0x00010000       0x10
+ startup.o(.text)
+ .text          0x00010000       0x10 startup.o
+                0x00010000                reset
+
+.data           0x00010010        0x0
+ *(.data)
+ .data          0x00010010        0x0 startup.o
+ .data          0x00010010        0x0 app.o
+ .data          0x00010010        0x0 uart.o
+
+.igot.plt       0x00010010        0x0
+ .igot.plt      0x00000000        0x0 startup.o
+
+.rodata         0x00010010       0x64
+ *(.rodata)
+ .rodata        0x00010010       0x64 app.o
+                0x00010010                string_input_user
+
+.bss            0x00010074       0x68
+ *(.bss)
+ .bss           0x00010074        0x0 startup.o
+ .bss           0x00010074        0x0 app.o
+ .bss           0x00010074        0x0 uart.o
+ COMMON         0x00010074       0x64 app.o
+                0x00010074                Buffer_2
+ COMMON         0x000100d8        0x4 uart.o
+                0x000100d8                learn_in
+
+.text           0x000100dc       0x70
+ *(.text)
+ .text          0x000100dc       0x20 app.o
+                0x000100dc                main
+ .text          0x000100fc       0x50 uart.o
+                0x000100fc                SET_STRING
+                0x0001114c                . = (. + 0x1000)
+                0x0001114c                stack_top = .
+LOAD app.o
+LOAD uart.o
+LOAD startup.o
+OUTPUT(learnindepth.elf elf32-littlearm)
+
+.glue_7         0x0001014c        0x0 load address 0x0001114c
+ .glue_7        0x00000000        0x0 linker stubs
+
+.glue_7t        0x0001014c        0x0 load address 0x0001114c
+ .glue_7t       0x00000000        0x0 linker stubs
+
+.vfp11_veneer   0x0001014c        0x0 load address 0x0001114c
+ .vfp11_veneer  0x00000000        0x0 linker stubs
+
+.v4_bx          0x0001014c        0x0 load address 0x0001114c
+ .v4_bx         0x00000000        0x0 linker stubs
+
+.iplt           0x0001014c        0x0 load address 0x0001114c
+ .iplt          0x00000000        0x0 startup.o
+
+.rel.dyn        0x0001014c        0x0 load address 0x0001114c
+ .rel.iplt      0x00000000        0x0 startup.o
+
+.ARM.attributes
+                0x00000000       0x2e
+ .ARM.attributes
+                0x00000000       0x22 startup.o
+ .ARM.attributes
+                0x00000022       0x32 app.o
+ .ARM.attributes
+                0x00000054       0x32 uart.o
+
+.comment        0x00000000       0x11
+ .comment       0x00000000       0x11 app.o
+                                 0x12 (size before relaxing)
+ .comment       0x00000000       0x12 uart.o
+
+.debug_info     0x00000000      0x188
+ .debug_info    0x00000000       0xcd app.o
+ .debug_info    0x000000cd       0xbb uart.o
+
+.debug_abbrev   0x00000000       0xdb
+ .debug_abbrev  0x00000000       0x6e app.o
+ .debug_abbrev  0x0000006e       0x6d uart.o
+
+.debug_loc      0x00000000       0x58
+ .debug_loc     0x00000000       0x2c app.o
+ .debug_loc     0x0000002c       0x2c uart.o
+
+.debug_aranges  0x00000000       0x40
+ .debug_aranges
+                0x00000000       0x20 app.o
+ .debug_aranges
+                0x00000020       0x20 uart.o
+
+.debug_line     0x00000000       0x73
+ .debug_line    0x00000000       0x36 app.o
+ .debug_line    0x00000036       0x3d uart.o
+
+.debug_str      0x00000000       0xc7
+ .debug_str     0x00000000       0xa0 app.o
+                                 0xd9 (size before relaxing)
+ .debug_str     0x000000a0       0x27 uart.o
+                                 0xda (size before relaxing)
+
+.debug_frame    0x00000000       0x54
+ .debug_frame   0x00000000       0x2c app.o
+ .debug_frame   0x0000002c       0x28 uart.o
