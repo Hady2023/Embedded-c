@@ -1,5 +1,4 @@
- 
-   
+
 .section .vectors 
 .word _stack_top
 .word Reset_handler 
