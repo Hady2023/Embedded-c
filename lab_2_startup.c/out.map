@@ -1,0 +1,121 @@
+Archive member included because of file (symbol)
+
+LIP_STATIC.a(startup.o)       (vector)
+LIP_STATIC.a(main.o)          LIP_STATIC.a(startup.o) (main)
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+ROM              0x08000000         0x00020000         xr
+RAM              0x20000000         0x00005000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+
+.text           0x08000000      0x1bc
+ *(.vector*)
+ .vectors       0x08000000       0x10 LIP_STATIC.a(startup.o)
+                0x08000000                vector
+ *(.text*)
+ .text          0x08000010      0x110 LIP_STATIC.a(startup.o)
+                0x08000010                Default_Handler
+                0x08000010                HF_Handler
+                0x08000010                BUS_Handler
+                0x0800001c                Reset_Handler
+ .text          0x08000120       0x9c LIP_STATIC.a(main.o)
+                0x08000120                main
+ *(.rodata*)
+                0x080001bc                _E_text = .
+
+.glue_7         0x080001bc        0x0
+ .glue_7        0x00000000        0x0 linker stubs
+
+.glue_7t        0x080001bc        0x0
+ .glue_7t       0x00000000        0x0 linker stubs
+
+.vfp11_veneer   0x080001bc        0x0
+ .vfp11_veneer  0x00000000        0x0 linker stubs
+
+.v4_bx          0x080001bc        0x0
+ .v4_bx         0x00000000        0x0 linker stubs
+
+.iplt           0x080001bc        0x0
+ .iplt          0x00000000        0x0 LIP_STATIC.a(startup.o)
+
+.rel.dyn        0x080001bc        0x0
+ .rel.iplt      0x00000000        0x0 LIP_STATIC.a(startup.o)
+
+.data           0x20000000       0x28 load address 0x080001c0
+                0x20000000                _S_DATA = .
+ *(.data*)
+ .data          0x20000000        0x0 LIP_STATIC.a(startup.o)
+ .data          0x20000000       0x28 LIP_STATIC.a(main.o)
+                0x20000000                x_0
+                0x20000010                x_1
+                0x20000028                _E_DATA = .
+
+.igot.plt       0x20000028        0x0 load address 0x080001e8
+ .igot.plt      0x00000000        0x0 LIP_STATIC.a(startup.o)
+
+.bss            0x20000028      0x3f4 load address 0x080001e8
+                0x20000028                _S_BSS = .
+ *(.bss*)
+ .bss           0x20000028        0x8 LIP_STATIC.a(startup.o)
+                0x20000028                i
+                0x2000002c                j
+ .bss           0x20000030        0x2 LIP_STATIC.a(main.o)
+                0x20000030                a
+                0x20000031                b
+                0x20000032                _E_BSS = .
+                0x20000034                . = ALIGN (0x4)
+ *fill*         0x20000032        0x2 
+                0x2000041c                . = (. + 0x3e8)
+ *fill*         0x20000034      0x3e8 
+                0x2000041c                _stack_top = .
+LOAD LIP_STATIC.a
+OUTPUT(LED_P13.elf elf32-littlearm)
+
+.debug_info     0x00000000      0x2c9
+ .debug_info    0x00000000      0x18f LIP_STATIC.a(startup.o)
+ .debug_info    0x0000018f      0x13a LIP_STATIC.a(main.o)
+
+.debug_abbrev   0x00000000      0x148
+ .debug_abbrev  0x00000000       0xc6 LIP_STATIC.a(startup.o)
+ .debug_abbrev  0x000000c6       0x82 LIP_STATIC.a(main.o)
+
+.debug_loc      0x00000000       0x90
+ .debug_loc     0x00000000       0x64 LIP_STATIC.a(startup.o)
+ .debug_loc     0x00000064       0x2c LIP_STATIC.a(main.o)
+
+.debug_aranges  0x00000000       0x40
+ .debug_aranges
+                0x00000000       0x20 LIP_STATIC.a(startup.o)
+ .debug_aranges
+                0x00000020       0x20 LIP_STATIC.a(main.o)
+
+.debug_line     0x00000000      0x163
+ .debug_line    0x00000000       0xc5 LIP_STATIC.a(startup.o)
+ .debug_line    0x000000c5       0x9e LIP_STATIC.a(main.o)
+
+.debug_str      0x00000000      0x141
+ .debug_str     0x00000000      0x120 LIP_STATIC.a(startup.o)
+                                0x163 (size before relaxing)
+ .debug_str     0x00000120       0x21 LIP_STATIC.a(main.o)
+                                0x103 (size before relaxing)
+
+.comment        0x00000000       0x11
+ .comment       0x00000000       0x11 LIP_STATIC.a(startup.o)
+                                 0x12 (size before relaxing)
+ .comment       0x00000000       0x12 LIP_STATIC.a(main.o)
+
+.ARM.attributes
+                0x00000000       0x33
+ .ARM.attributes
+                0x00000000       0x33 LIP_STATIC.a(startup.o)
+ .ARM.attributes
+                0x00000033       0x33 LIP_STATIC.a(main.o)
+
+.debug_frame    0x00000000       0x74
+ .debug_frame   0x00000000       0x4c LIP_STATIC.a(startup.o)
+ .debug_frame   0x0000004c       0x28 LIP_STATIC.a(main.o)
